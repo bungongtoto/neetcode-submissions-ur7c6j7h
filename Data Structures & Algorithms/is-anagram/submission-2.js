@@ -1,0 +1,26 @@
+class Solution {
+    /**
+     * @param {string} s
+     * @param {string} t
+     * @return {boolean}
+     */
+    isAnagram(s, t) {
+        //edge case if both are not of thesame length
+        if (s.length !== t.length){
+            return false;
+        }
+
+        const count = new Array(26).fill(0);
+
+        //count the occurrance of each letter in both S and T
+        for (let i = 0 ; i < s.length ; i++){
+           count[s.charCodeAt(i) - 'a'.charCodeAt(0)]++;
+           count[t.charCodeAt(i) - 'a'.charCodeAt(0)]--;
+        }
+
+        
+        return count.every(val => val === 0);
+
+
+    }
+}
