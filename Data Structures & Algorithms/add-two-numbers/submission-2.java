@@ -1,47 +1,35 @@
-/*
-// Definition for a Node.
-class Node {
-    int val;
-    Node next;
-    Node random;
-
-    public Node(int val) {
-        this.val = val;
-        this.next = null;
-        this.random = null;
-    }
-}
-*/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 
 class Solution {
-    public Node copyRandomList(Node head) {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dommy = new ListNode();
+        ListNode cur = dommy;
+        int remender = 0;
 
-        HashMap<Node, Node> oldCopy = new HashMap<>();
-        oldCopy.put(null, null);
-        Node curr = head;
-        while (curr != null){
-            
-            //copy the main node
-            if(!oldCopy.containsKey(curr)){
-               oldCopy.put(curr, new Node(0));
-            }
+        while (l1 != null || l2 != null || remender != 0){
+            int val1 = (l1 != null) ?  l1.val : 0;
+            int val2 = (l2 != null) ? l2.val : 0;
 
-            oldCopy.get(curr).val = curr.val;
-            
-            //copy the next
-            if(!oldCopy.containsKey(curr.next)){
-                oldCopy.put(curr.next, new Node(0));
-            }
-            oldCopy.get(curr).next = oldCopy.get(curr.next);
-            //copy the random
-            if(!oldCopy.containsKey(curr.random)){
-                oldCopy.put(curr.random, new Node(0));
-            }
-            oldCopy.get(curr).random = oldCopy.get(curr.random);
-            curr = curr.next;
+            int sum = val1 + val2 + remender;
+            remender = sum / 10;
+            sum = sum % 10;
+
+            cur.next = new ListNode(sum);
+
+            l1 = (l1 != null) ? l1.next : null;
+            l2 = (l2 != null) ? l2.next : null;
+            cur = cur.next;
         }
 
-        return oldCopy.get(head);
-        
+        return dommy.next;
     }
 }
