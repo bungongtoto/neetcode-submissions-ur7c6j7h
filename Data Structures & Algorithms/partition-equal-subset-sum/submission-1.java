@@ -1,0 +1,39 @@
+class Solution {
+    private int[][] memo ;
+    public boolean canPartition(int[] nums) {
+        int sum = 0;
+
+        for (int num : nums){
+            sum += num;
+        }
+
+        if (sum % 2 != 0) return false;
+
+        int target = sum / 2;
+
+        memo = new int[nums.length][target + 1];
+
+        for (int[] row : memo){
+            Arrays.fill(row, -1);
+        }
+
+        return dfs(nums, 0, target);
+    }
+
+    private boolean dfs(int[] nums, int i , int target){
+        if (target == 0) return true;
+
+        if (target < 0 || i == nums.length) return false;
+
+        if (memo[i][target] != -1){
+            return memo[i][target] == 1;
+        }
+
+
+        boolean res =  dfs(nums, i+1, target) || dfs(nums, i+1, target - nums[i]);
+
+        memo[i][target] = res ? 1 : 0;
+
+        return res;
+    }
+}
